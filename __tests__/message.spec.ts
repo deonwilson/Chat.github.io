@@ -20,11 +20,6 @@ describe('Add message to chat', () => {
     timestamp: 5465656,
     sentBy: SentByEnum.BUSINESS
   }
-  let newChat: IMessage = {
-    text: "hello, how are you?",
-    timestamp: 5465656,
-    sentBy: SentByEnum.BUSINESS
-  }
   const messageError = {
 
   }
