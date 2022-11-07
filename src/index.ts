@@ -7,7 +7,7 @@ import { StatusError } from './errors/StatusError';
 import chatRoutes from './routes/chat.routes';
 import messageRoutes from './routes/message.routes';
 
-import { MONGODB_URI, PORT } from './config';
+import { CHAT_DB_URI, PORT } from './const/dataBase';
 
 const app = express().use(bodyParser.json());
 
@@ -26,7 +26,7 @@ app.use((error: StatusError, req: any, res: any, next: any): void => {
 	return res.status(status).json({ message });
 });
 
-connect(MONGODB_URI)
+connect(CHAT_DB_URI)
 	.then(() => {
 		app.listen(PORT);
 		console.log(`Listening on port ${PORT}`);

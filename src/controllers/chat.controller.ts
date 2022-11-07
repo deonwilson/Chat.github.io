@@ -2,16 +2,18 @@ import { Request, Response, NextFunction } from '../types/express'
 import { ChatService } from '../services/chat.service';
 import { CHAT_CONTROLLER } from './const';
 import { errorController } from './error';
+import { IChat } from '../interfaces/Chat';
 
 //al final extenderle la interfas req o añadir libreria que me resuelva este tipado
 export const ChatController = {
   async postChat(req: Request, res: Response, next: NextFunction) {
 
     try {
-      const chat = req.body;
-      const created = await ChatService.createChat(chat);
-      if(!created) errorController(CHAT_CONTROLLER, "postChat")
-      return res.status(201).json(created);
+      const chat :IChat = req.body;
+      chat.totalMessages = chat.messages?.length
+      const chatCreate = await ChatService.createChat(chat);
+      if(!chatCreate) errorController(CHAT_CONTROLLER, "postChat")
+      return res.status(201).json(chatCreate);
 
     } catch (error) {
       next(error);

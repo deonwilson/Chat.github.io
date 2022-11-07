@@ -8,6 +8,7 @@ export const chatMiddleware = {
     try {
       const chatId = req.query.chatId as string;
       const created = await ChatService.getChat(chatId);
+      console.log(created)
       if (!created) {
         const error = {
           message: "this chat no exist or error in chatMiddleware existChat",

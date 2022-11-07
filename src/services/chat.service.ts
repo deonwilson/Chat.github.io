@@ -1,11 +1,17 @@
 import { IChat } from '../interfaces/Chat';
 import { ChatModel } from '../models/Chat';
+import { MessageModel } from '../models/Message';
 
 export const ChatService = {
-  async createChat(chat: IChat): Promise<IChat> {
-    const data = new ChatModel(chat)
-    await data.save()
-    return data as IChat;
+  async createChat(chat: IChat ): Promise<IChat> {
+    const newMessage = await MessageModel.insertMany(chat.messages)
+    const saveChat:IChat ={
+      messages : newMessage,
+      totalMessages: chat.totalMessages
+    } 
+    const data = new ChatModel(saveChat)
+    const chatCreateOk = await data.save()
+    return chatCreateOk as IChat;
   },
 
   async getChats(): Promise<IChat[]> { // aclaracion *1
@@ -24,14 +30,3 @@ export const ChatService = {
     return await ChatModel.findOne({_id: chatId, messages: messageId}) as IChat;
   },
 };
-//aclarion*1 : optomizo la memoria, parece absurdo por que claro, cuando compila simplifica el codigo,
-// ejemplo, de tener una constante declarada asi const chat = {etc}, pasa por un proceso, para que esa variable ocupe menos espacio
-// en memoria, de la variable chat lo pasa capaz a x o y anda saber para que ocupe menos,
-// aun se puede mejorar no declarando nada y retornando directo la consulta y optimizaria aun mas.
-/* 
-async getChats(): Promise<IChat[]> {
-    const chat = await ChatModel.find() 
-    return chat as IChat[];
-  },
-
-*/

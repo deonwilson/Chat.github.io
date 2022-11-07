@@ -14,7 +14,7 @@ router.post('/chats', ChatController.postChat);
 
 router.get('/chats', ChatController.getChats);
 
-router.get('/chats/:chatId', chatDto, chatMiddleware.existChat, ChatController.getChat);
+router.get('/chats/:chatId', chatDto, ChatController.getChat);
 
 router.delete('/chats/:chatId', chatDto, chatMiddleware.existChat, ChatController.deleteChat);
 
