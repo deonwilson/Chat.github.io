@@ -8,9 +8,9 @@ export enum SentByEnum {
 export interface IMessage {
   _id?: ObjectId;
 
-  text: string;
+  text?: string;
 
-  timestamp: number;
+  timestamp?: number;
 
-  sentBy: SentByEnum;
+  sentBy?: SentByEnum;
 }
