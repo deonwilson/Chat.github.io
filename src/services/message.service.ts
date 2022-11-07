@@ -10,7 +10,7 @@ export const MessageService = {
       { $push: { messages: messageReq } }, { new: true })
     await messageReq.save()
 
-    return message as IMessage;
+    return messageReq as IMessage;
   },
 
   async getMessagesFromChat(chatId: string): Promise<IMessage[]> {
@@ -23,5 +23,12 @@ export const MessageService = {
     await ChatModel.findOneAndUpdate({ _id: chatId }, { $pull: { messages: messageId } }, { new: true })
 
     return await MessageModel.findById(messageId) as IMessage;
+  },
+
+  async getMessageId(messageId: string): Promise<IMessage> {
+
+    const message =  await MessageModel.findById(messageId)
+
+    return message as IMessage;
   },
 };
